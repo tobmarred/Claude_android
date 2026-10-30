@@ -17,7 +17,7 @@ public class CardActivity extends Activity {
     // Pseudodaten – erfundene Hochschule und erfundene Person
     static final String UNIVERSITY = "Aurelion Fernhochschule";
     private static final String ADDRESS = "Aurelion Fernhochschule\nAm Wissenspark 8\n34567 Lindenhain";
-    static final String FIRST_NAME = "Jonas";
+    static final String FIRST_NAME = "Tobias";
     private static final String LAST_NAME = "Feldberg";
     private static final String BIRTHDAY = "14.03.1999";
     private static final String MATRIKEL = "AFH-2026-31415";
