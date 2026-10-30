@@ -12,22 +12,22 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-public class MainActivity extends Activity {
+public class CardActivity extends Activity {
 
     // Pseudodaten – erfundene Hochschule und erfundene Person
-    private static final String UNIVERSITY = "Aurelion Fernhochschule";
+    static final String UNIVERSITY = "Aurelion Fernhochschule";
     private static final String ADDRESS = "Aurelion Fernhochschule\nAm Wissenspark 8\n34567 Lindenhain";
-    private static final String FIRST_NAME = "Jonas";
+    static final String FIRST_NAME = "Jonas";
     private static final String LAST_NAME = "Feldberg";
     private static final String BIRTHDAY = "14.03.1999";
     private static final String MATRIKEL = "AFH-2026-31415";
-    private static final String PROGRAM = "Medieninformatik (B.Sc.)";
+    static final String PROGRAM = "Medieninformatik (B.Sc.)";
     private static final String SEMESTER = "Fernstudium · WiSe 2026/27";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_card);
 
         setText(R.id.greeting, FIRST_NAME);
         setText(R.id.university, UNIVERSITY);
