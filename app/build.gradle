@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'de.campuswallet.app'
+    namespace 'de.uit.campus'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'de.campuswallet.app'
+        applicationId 'de.uit.campus'
         minSdk 24
         targetSdk 35
         versionCode 1
@@ -20,6 +20,3 @@ android {
     }
 }
 
-dependencies {
-    implementation 'com.google.zxing:core:3.5.3'
-}
