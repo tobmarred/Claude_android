@@ -283,9 +283,6 @@ public class MainActivity extends Activity {
         name.setPadding(0, dp(12), 0, 0);
         top.addView(name);
         top.addView(text(DemoData.PROGRAM, 14, MUTED, false));
-        TextView demo = text("Demo-Profil · Studiendaten fiktiv", 12, ACCENT, true);
-        demo.setPadding(0, dp(8), 0, 0);
-        top.addView(demo);
         content.addView(top);
 
         LinearLayout personal = card();
@@ -296,7 +293,7 @@ public class MainActivity extends Activity {
         content.addView(personal);
 
         LinearLayout study = card();
-        study.addView(label("Studium (fiktive Testdaten)"));
+        study.addView(label("Studium"));
         for (String[] row : DemoData.PROFILE_STUDY) {
             study.addView(listRow(row[0], row[1]));
         }
@@ -308,6 +305,12 @@ public class MainActivity extends Activity {
             contact.addView(listRow(row[0], row[1]));
         }
         content.addView(contact);
+
+        TextView demo = text("Demo-Profil · Studiendaten fiktiv", 11, MUTED, false);
+        demo.setGravity(Gravity.CENTER);
+        demo.setPadding(0, dp(18), 0, 0);
+        content.addView(demo, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void buildContacts() {
