@@ -338,6 +338,8 @@ public class MainActivity extends Activity {
         demo.setPadding(0, dp(18), 0, 0);
         content.addView(demo, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        animateEntrance();
     }
 
     private void buildContacts() {
@@ -412,6 +414,22 @@ public class MainActivity extends Activity {
         a.setBackground(bg);
         a.setLayoutParams(new LinearLayout.LayoutParams(dp(sizeDp), dp(sizeDp)));
         return a;
+    }
+
+    /** Karten gleiten beim Öffnen nacheinander von unten herein – läuft einmal ab. */
+    private void animateEntrance() {
+        for (int i = 0; i < content.getChildCount(); i++) {
+            View child = content.getChildAt(i);
+            child.setAlpha(0f);
+            child.setTranslationY(dp(24));
+            child.animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setStartDelay(i * 90L)
+                    .setDuration(380)
+                    .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                    .start();
+        }
     }
 
     private View divider() {
