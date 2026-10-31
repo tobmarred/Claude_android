@@ -215,9 +215,9 @@ public class MainActivity extends Activity {
         for (int i = 0; i < DemoData.QUICK_LINKS.length; i++) {
             String[] q = DemoData.QUICK_LINKS[i];
             final int target = i + 1;
-            View row = listRow(q[0], q[1] + "  →");
-            row.setOnClickListener(v -> showTab(target));
-            quick.addView(row);
+            View link = listRow(q[0], q[1] + "  →");
+            link.setOnClickListener(v -> showTab(target));
+            quick.addView(link);
         }
         content.addView(quick);
 
