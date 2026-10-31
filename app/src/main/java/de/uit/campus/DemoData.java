@@ -11,7 +11,7 @@ final class DemoData {
     static final String STUDENT_FIRST_NAME = "Tobias";
     static final String STUDENT_LAST_NAME = "Redmann";
     static final String STUDENT_BIRTHDAY = "31.05.1988";
-    static final String DEMO_NOTICE = "DEMO / TESTANWENDUNG – kein offizieller Studiennachweis";
+    static final String DEMO_NOTICE = "Inoffizielle Anwendung – kein Studien- oder Immatrikulationsnachweis";
     static final String PROGRAM = "Wirtschaftsinformatik (B.Sc.)";
     static final String SEMESTER = "5. Fachsemester · WiSe 2026/27";
 

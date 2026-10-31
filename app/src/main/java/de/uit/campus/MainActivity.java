@@ -42,7 +42,6 @@ public class MainActivity extends Activity {
 
         header = buildHeader();
         root.addView(header);
-        root.addView(buildDemoBanner());
 
         scroll = new ScrollView(this);
         content = new LinearLayout(this);
@@ -109,14 +108,6 @@ public class MainActivity extends Activity {
         profileButton.setOnClickListener(v -> showTab(PROFILE_TAB));
         bar.addView(profileButton);
         return bar;
-    }
-
-    private View buildDemoBanner() {
-        TextView banner = text(DemoData.DEMO_NOTICE, 12, Color.WHITE, true);
-        banner.setGravity(Gravity.CENTER);
-        banner.setBackgroundColor(ACCENT);
-        banner.setPadding(dp(12), dp(6), dp(12), dp(6));
-        return banner;
     }
 
     private LinearLayout buildBottomNav() {
@@ -329,6 +320,11 @@ public class MainActivity extends Activity {
             c.addView(body);
             content.addView(c);
         }
+
+        LinearLayout info = card();
+        info.addView(label("Impressum & Hinweis"));
+        info.addView(text(DemoData.DEMO_NOTICE, 15, TEXT, true));
+        content.addView(info);
     }
 
     // ---------- Bausteine ----------
