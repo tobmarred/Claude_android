@@ -9,6 +9,7 @@ final class DemoData {
     static final String UNI_SHORT = "UIT";
     static final String UNI_SLOGAN = "Digital studieren. Überall.";
     static final String STUDENT_FIRST_NAME = "Tobias";
+    static final String STUDENT_LAST_NAME = "Feldberg";
     static final String PROGRAM = "Wirtschaftsinformatik (B.Sc.)";
     static final String SEMESTER = "5. Fachsemester · WiSe 2026/27";
 
@@ -55,6 +56,20 @@ final class DemoData {
             {"15.11.", "Anmeldeschluss Prüfungen"},
             {"02.12.", "Virtueller Campus-Tag"},
             {"22.12. – 06.01.", "Vorlesungsfreie Zeit"},
+    };
+
+    // Profil: Bezeichnung, Wert
+    static final String[][] PROFILE_STUDY = {
+            {"Studienmodell", "Fernstudium, berufsbegleitend"},
+            {"Semester", "5. Fachsemester"},
+            {"Studienbeginn", "WiSe 2024/25"},
+            {"Matrikelnr.", "UIT-204781"},
+    };
+
+    static final String[][] PROFILE_CONTACT = {
+            {"E-Mail", "tobias.feldberg@uit.example"},
+            {"Telefon", "0170 0000000"},
+            {"Ort", "Neustadt"},
     };
 
     // Kontakte: Titel, Details

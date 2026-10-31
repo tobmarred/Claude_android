@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowInsets;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -22,10 +23,13 @@ public class MainActivity extends Activity {
 
     private static final String[] TAB_TITLES = {"Start", "Plan", "Noten", "News", "Kontakt"};
     private static final String[] TAB_ICONS = {"⌂", "▦", "★", "✉", "☎"};
+    private static final int PROFILE_TAB = 99;
 
     private LinearLayout content;
     private ScrollView scroll;
     private TextView headerTitle;
+    private LinearLayout header;
+    private LinearLayout nav;
     private final TextView[] tabs = new TextView[TAB_TITLES.length];
 
     @Override
@@ -36,7 +40,8 @@ public class MainActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.parseColor("#F1F5F9"));
 
-        root.addView(buildHeader());
+        header = buildHeader();
+        root.addView(header);
 
         scroll = new ScrollView(this);
         content = new LinearLayout(this);
@@ -46,8 +51,27 @@ public class MainActivity extends Activity {
         root.addView(scroll, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
 
-        root.addView(buildBottomNav());
+        nav = buildBottomNav();
+        root.addView(nav);
         setContentView(root);
+
+        // Ab Android 15 zeichnet die App unter Status- und Navigationsleiste –
+        // Abstand einfügen, damit das Menü unten nicht verdeckt wird.
+        root.setOnApplyWindowInsetsListener((v, insets) -> {
+            int top;
+            int bottom;
+            if (android.os.Build.VERSION.SDK_INT >= 30) {
+                android.graphics.Insets bars = insets.getInsets(WindowInsets.Type.systemBars());
+                top = bars.top;
+                bottom = bars.bottom;
+            } else {
+                top = insets.getSystemWindowInsetTop();
+                bottom = insets.getSystemWindowInsetBottom();
+            }
+            header.setPadding(dp(20), top + dp(18), dp(20), dp(18));
+            nav.setPadding(0, dp(6), 0, bottom + dp(6));
+            return insets;
+        });
 
         showTab(0);
     }
@@ -63,22 +87,30 @@ public class MainActivity extends Activity {
 
     // ---------- Grundgerüst ----------
 
-    private View buildHeader() {
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setBackgroundColor(PRIMARY);
-        header.setPadding(dp(20), dp(18), dp(20), dp(18));
+    private LinearLayout buildHeader() {
+        LinearLayout bar = new LinearLayout(this);
+        bar.setOrientation(LinearLayout.HORIZONTAL);
+        bar.setGravity(Gravity.CENTER_VERTICAL);
+        bar.setBackgroundColor(PRIMARY);
+        bar.setPadding(dp(20), dp(18), dp(20), dp(18));
 
+        LinearLayout titles = new LinearLayout(this);
+        titles.setOrientation(LinearLayout.VERTICAL);
         TextView logo = text(DemoData.UNI_SHORT, 26, Color.WHITE, true);
         logo.setLetterSpacing(0.15f);
-        header.addView(logo);
-
+        titles.addView(logo);
         headerTitle = text("", 14, Color.parseColor("#CCFBF1"), false);
-        header.addView(headerTitle);
-        return header;
+        titles.addView(headerTitle);
+        bar.addView(titles, new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        TextView profileButton = avatar(40, 16);
+        profileButton.setOnClickListener(v -> showTab(PROFILE_TAB));
+        bar.addView(profileButton);
+        return bar;
     }
 
-    private View buildBottomNav() {
+    private LinearLayout buildBottomNav() {
         LinearLayout nav = new LinearLayout(this);
         nav.setOrientation(LinearLayout.HORIZONTAL);
         nav.setBackgroundColor(Color.WHITE);
@@ -89,7 +121,9 @@ public class MainActivity extends Activity {
             final int index = i;
             TextView tab = text(TAB_ICONS[i] + "\n" + TAB_TITLES[i], 12, MUTED, false);
             tab.setGravity(Gravity.CENTER);
-            tab.setPadding(0, dp(6), 0, dp(6));
+            tab.setPadding(0, dp(8), 0, dp(8));
+            tab.setMinHeight(dp(56));
+            tab.setClickable(true);
             tab.setOnClickListener(v -> showTab(index));
             tabs[i] = tab;
             nav.addView(tab, new LinearLayout.LayoutParams(0,
@@ -111,6 +145,7 @@ public class MainActivity extends Activity {
             case 1: buildSchedule(); break;
             case 2: buildGrades(); break;
             case 3: buildNews(); break;
+            case PROFILE_TAB: buildProfile(); break;
             default: buildContacts(); break;
         }
         scroll.scrollTo(0, 0);
@@ -238,6 +273,33 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void buildProfile() {
+        headerTitle.setText("Mein Profil");
+
+        LinearLayout top = card();
+        top.setGravity(Gravity.CENTER_HORIZONTAL);
+        top.addView(avatar(88, 32));
+        TextView name = text(DemoData.STUDENT_FIRST_NAME + " " + DemoData.STUDENT_LAST_NAME, 22, TEXT, true);
+        name.setPadding(0, dp(12), 0, 0);
+        top.addView(name);
+        top.addView(text(DemoData.PROGRAM, 14, MUTED, false));
+        content.addView(top);
+
+        LinearLayout study = card();
+        study.addView(label("Studium"));
+        for (String[] row : DemoData.PROFILE_STUDY) {
+            study.addView(listRow(row[0], row[1]));
+        }
+        content.addView(study);
+
+        LinearLayout contact = card();
+        contact.addView(label("Kontaktdaten"));
+        for (String[] row : DemoData.PROFILE_CONTACT) {
+            contact.addView(listRow(row[0], row[1]));
+        }
+        content.addView(contact);
+    }
+
     private void buildContacts() {
         headerTitle.setText("Kontakt & Service");
         for (String[] k : DemoData.CONTACTS) {
@@ -292,6 +354,19 @@ public class MainActivity extends Activity {
         row.addView(text(right, 14, TEXT, false), new LinearLayout.LayoutParams(0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         return row;
+    }
+
+    private TextView avatar(int sizeDp, int textSp) {
+        TextView a = text("" + DemoData.STUDENT_FIRST_NAME.charAt(0)
+                + DemoData.STUDENT_LAST_NAME.charAt(0), textSp, Color.WHITE, true);
+        a.setGravity(Gravity.CENTER);
+        GradientDrawable bg = new GradientDrawable();
+        bg.setShape(GradientDrawable.OVAL);
+        bg.setColor(ACCENT);
+        bg.setStroke(dp(2), Color.WHITE);
+        a.setBackground(bg);
+        a.setLayoutParams(new LinearLayout.LayoutParams(dp(sizeDp), dp(sizeDp)));
+        return a;
     }
 
     private View divider() {
