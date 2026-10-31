@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
 
         header = buildHeader();
         root.addView(header);
+        root.addView(buildDemoBanner());
 
         scroll = new ScrollView(this);
         content = new LinearLayout(this);
@@ -108,6 +109,14 @@ public class MainActivity extends Activity {
         profileButton.setOnClickListener(v -> showTab(PROFILE_TAB));
         bar.addView(profileButton);
         return bar;
+    }
+
+    private View buildDemoBanner() {
+        TextView banner = text(DemoData.DEMO_NOTICE, 12, Color.WHITE, true);
+        banner.setGravity(Gravity.CENTER);
+        banner.setBackgroundColor(ACCENT);
+        banner.setPadding(dp(12), dp(6), dp(12), dp(6));
+        return banner;
     }
 
     private LinearLayout buildBottomNav() {
@@ -283,10 +292,20 @@ public class MainActivity extends Activity {
         name.setPadding(0, dp(12), 0, 0);
         top.addView(name);
         top.addView(text(DemoData.PROGRAM, 14, MUTED, false));
+        TextView demo = text("Demo-Profil · Studiendaten fiktiv", 12, ACCENT, true);
+        demo.setPadding(0, dp(8), 0, 0);
+        top.addView(demo);
         content.addView(top);
 
+        LinearLayout personal = card();
+        personal.addView(label("Persönliche Daten"));
+        for (String[] row : DemoData.PROFILE_PERSONAL) {
+            personal.addView(listRow(row[0], row[1]));
+        }
+        content.addView(personal);
+
         LinearLayout study = card();
-        study.addView(label("Studium"));
+        study.addView(label("Studium (fiktive Testdaten)"));
         for (String[] row : DemoData.PROFILE_STUDY) {
             study.addView(listRow(row[0], row[1]));
         }

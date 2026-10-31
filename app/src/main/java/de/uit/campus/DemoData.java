@@ -9,7 +9,9 @@ final class DemoData {
     static final String UNI_SHORT = "UIT";
     static final String UNI_SLOGAN = "Digital studieren. Überall.";
     static final String STUDENT_FIRST_NAME = "Tobias";
-    static final String STUDENT_LAST_NAME = "Feldberg";
+    static final String STUDENT_LAST_NAME = "Redmann";
+    static final String STUDENT_BIRTHDAY = "31.05.1988";
+    static final String DEMO_NOTICE = "DEMO / TESTANWENDUNG – kein offizieller Studiennachweis";
     static final String PROGRAM = "Wirtschaftsinformatik (B.Sc.)";
     static final String SEMESTER = "5. Fachsemester · WiSe 2026/27";
 
@@ -66,8 +68,12 @@ final class DemoData {
             {"Matrikelnr.", "UIT-204781"},
     };
 
+    static final String[][] PROFILE_PERSONAL = {
+            {"Geburtsdatum", STUDENT_BIRTHDAY},
+    };
+
     static final String[][] PROFILE_CONTACT = {
-            {"E-Mail", "tobias.feldberg@uit.example"},
+            {"E-Mail", "tobias.redmann@uit.example"},
             {"Telefon", "0170 0000000"},
             {"Ort", "Neustadt"},
     };
