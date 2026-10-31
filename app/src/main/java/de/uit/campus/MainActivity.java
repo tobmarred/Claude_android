@@ -2,11 +2,14 @@ package de.uit.campus;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Outline;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -156,10 +159,35 @@ public class MainActivity extends Activity {
     private void buildHome() {
         headerTitle.setText(DemoData.UNI_SLOGAN);
 
-        TextView hello = text("Hallo, " + DemoData.STUDENT_FIRST_NAME + "! 👋", 24, TEXT, true);
-        hello.setPadding(0, dp(12), 0, 0);
-        content.addView(hello);
-        content.addView(text(DemoData.PROGRAM + "\n" + DemoData.SEMESTER, 14, MUTED, false));
+        LinearLayout greeting = new LinearLayout(this);
+        greeting.setGravity(Gravity.CENTER_VERTICAL);
+        greeting.setPadding(0, dp(12), 0, 0);
+
+        ImageView photo = new ImageView(this);
+        photo.setImageResource(R.drawable.profile_photo);
+        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        GradientDrawable ring = new GradientDrawable();
+        ring.setShape(GradientDrawable.OVAL);
+        ring.setStroke(dp(3), ACCENT);
+        photo.setBackground(ring);
+        photo.setPadding(dp(3), dp(3), dp(3), dp(3));
+        photo.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setOval(0, 0, view.getWidth(), view.getHeight());
+            }
+        });
+        photo.setClipToOutline(true);
+        greeting.addView(photo, new LinearLayout.LayoutParams(dp(96), dp(96)));
+
+        LinearLayout greetingText = new LinearLayout(this);
+        greetingText.setOrientation(LinearLayout.VERTICAL);
+        greetingText.setPadding(dp(16), 0, 0, 0);
+        greetingText.addView(text("Hallo, " + DemoData.STUDENT_FIRST_NAME + "! 👋", 24, TEXT, true));
+        greetingText.addView(text(DemoData.PROGRAM + "\n" + DemoData.SEMESTER, 14, MUTED, false));
+        greeting.addView(greetingText, new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        content.addView(greeting);
 
         // Fortschritt
         LinearLayout progress = card();
