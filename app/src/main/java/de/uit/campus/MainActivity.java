@@ -166,11 +166,6 @@ public class MainActivity extends Activity {
         ImageView photo = new ImageView(this);
         photo.setImageResource(R.drawable.profile_photo);
         photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        GradientDrawable ring = new GradientDrawable();
-        ring.setShape(GradientDrawable.OVAL);
-        ring.setStroke(dp(3), ACCENT);
-        photo.setBackground(ring);
-        photo.setPadding(dp(3), dp(3), dp(3), dp(3));
         photo.setOutlineProvider(new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {
@@ -214,13 +209,17 @@ public class MainActivity extends Activity {
         nextCard.addView(text(next[0] + ", " + next[1] + "\n" + next[3], 14, MUTED, false));
         content.addView(nextCard);
 
-        // Termine
-        LinearLayout events = card();
-        events.addView(label("Termine"));
-        for (String[] e : DemoData.EVENTS) {
-            events.addView(listRow(e[0], e[1]));
+        // Schnellzugriff
+        LinearLayout quick = card();
+        quick.addView(label("Schnellzugriff"));
+        for (int i = 0; i < DemoData.QUICK_LINKS.length; i++) {
+            String[] q = DemoData.QUICK_LINKS[i];
+            final int target = i + 1;
+            View row = listRow(q[0], q[1] + "  →");
+            row.setOnClickListener(v -> showTab(target));
+            quick.addView(row);
         }
-        content.addView(events);
+        content.addView(quick);
 
         // Neueste Meldung
         String[] news = DemoData.NEWS[0];

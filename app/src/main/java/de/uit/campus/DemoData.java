@@ -52,12 +52,12 @@ final class DemoData {
                     "Über 5.000 neue Fachbücher stehen dir ab sofort digital zur Verfügung."},
     };
 
-    // Termine: Datum, Beschreibung
-    static final String[][] EVENTS = {
-            {"04.11.", "Online-Sprechstunde Studienberatung"},
-            {"15.11.", "Anmeldeschluss Prüfungen"},
-            {"02.12.", "Virtueller Campus-Tag"},
-            {"22.12. – 06.01.", "Vorlesungsfreie Zeit"},
+    // Schnellzugriff: Symbol, Beschriftung – Reihenfolge entspricht den Tabs Plan, Noten, News, Kontakt
+    static final String[][] QUICK_LINKS = {
+            {"▦", "Mein Stundenplan"},
+            {"★", "Meine Noten"},
+            {"✉", "Alle Neuigkeiten"},
+            {"☎", "Studienservice & Hilfe"},
     };
 
     // Profil: Bezeichnung, Wert
