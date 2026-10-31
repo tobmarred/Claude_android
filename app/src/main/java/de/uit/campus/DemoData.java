@@ -64,7 +64,7 @@ final class DemoData {
     static final String[][] PROFILE_STUDY = {
             {"Studienmodell", "Fernstudium, berufsbegleitend"},
             {"Semester", "5. Fachsemester"},
-            {"Studienbeginn", "WiSe 2024/25"},
+            {"Studienbeginn", "WiSe 2026/27"},
             {"Matrikelnr.", "UIT-204781"},
     };
 
@@ -74,8 +74,8 @@ final class DemoData {
 
     static final String[][] PROFILE_CONTACT = {
             {"E-Mail", "tobias.redmann@uit.example"},
-            {"Telefon", "0170 0000000"},
-            {"Ort", "Neustadt"},
+            {"Telefon", "0171 3920067"},
+            {"Ort", "Hösbach"},
     };
 
     // Kontakte: Titel, Details
