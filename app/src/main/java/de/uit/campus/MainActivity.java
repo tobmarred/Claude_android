@@ -416,19 +416,49 @@ public class MainActivity extends Activity {
         return a;
     }
 
-    /** Karten gleiten beim Öffnen nacheinander von unten herein – läuft einmal ab. */
+    /**
+     * Einmalige Einblend-Animation beim Öffnen: Kopfkarte zoomt auf, Karten gleiten
+     * mit leichtem Nachfedern herein, Zeilen erscheinen einzeln. Danach steht alles still.
+     */
     private void animateEntrance() {
+        long delay = 0;
         for (int i = 0; i < content.getChildCount(); i++) {
-            View child = content.getChildAt(i);
-            child.setAlpha(0f);
-            child.setTranslationY(dp(24));
-            child.animate()
-                    .alpha(1f)
-                    .translationY(0f)
-                    .setStartDelay(i * 90L)
-                    .setDuration(380)
-                    .setInterpolator(new android.view.animation.DecelerateInterpolator())
-                    .start();
+            View card = content.getChildAt(i);
+            card.setAlpha(0f);
+            if (i == 0) {
+                card.setScaleX(0.85f);
+                card.setScaleY(0.85f);
+                card.animate()
+                        .alpha(1f).scaleX(1f).scaleY(1f)
+                        .setStartDelay(delay)
+                        .setDuration(450)
+                        .setInterpolator(new android.view.animation.OvershootInterpolator(1.4f))
+                        .start();
+            } else {
+                card.setTranslationY(dp(40));
+                card.animate()
+                        .alpha(1f).translationY(0f)
+                        .setStartDelay(delay)
+                        .setDuration(500)
+                        .setInterpolator(new android.view.animation.OvershootInterpolator(1.1f))
+                        .start();
+            }
+
+            if (i > 0 && card instanceof LinearLayout) {
+                LinearLayout rows = (LinearLayout) card;
+                for (int r = 1; r < rows.getChildCount(); r++) {
+                    View row = rows.getChildAt(r);
+                    row.setAlpha(0f);
+                    row.setTranslationX(dp(16));
+                    row.animate()
+                            .alpha(1f).translationX(0f)
+                            .setStartDelay(delay + 150 + r * 70L)
+                            .setDuration(300)
+                            .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                            .start();
+                }
+            }
+            delay += 120;
         }
     }
 
